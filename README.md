@@ -15,7 +15,7 @@ So, basically it stores PNPDeviceId and stores it in config_file. This makes the
 
 Some Precautions:-
 
-1.Windows Denfender doesn't seem to like exe created by Pyinstaller. It will mark files as trojan.<\n>
+1.Windows Denfender doesn't seem to like exe created by Pyinstaller. It will mark files as trojan.
 2.Disable windows defender real time protection before extracting the zip.3
 3.Put the zip in drivepa/rtition, of which you don't want bakup of, add this folder to Defender's trust list.
 4.And don't move the extracted folder anywhere else, without unconfiguring the auto backup task using the program.
