@@ -14,7 +14,7 @@ How it works:-
 So, basically it stores PNPDeviceId and stores it in config_file. This makes the backing up independent of drive letters, which tend to change for any connected device, based on how many or at which port they are connected.
 
 Some Precautions:-
-*
+Markup: *
 1.Windows Denfender doesn't seem to like exe created by Pyinstaller. It will mark files as trojan.
 2.Disable windows defender real time protection before extracting the zip.3
 3.Put the zip in drivepa/rtition, of which you don't want bakup of, add this folder to Defender's trust list.
