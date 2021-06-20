@@ -20,4 +20,3 @@ Some Precautions:-
 * 3.Put the zip in drivepa/rtition, of which you don't want bakup of, add this folder to Defender's trust list.
 * 4.And don't move the extracted folder anywhere else, without unconfiguring the auto backup task using the program.
 * 5.Follow the instructions, show by the program.
-
