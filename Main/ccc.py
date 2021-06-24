@@ -5,7 +5,9 @@ from time import  localtime, asctime
 from os import listdir
 from os.path import isdir, dirname
 from time import sleep
-from sys import exit
+import sys
+from pathlib import Path
+
 
 #Third party imports
 import wmi
@@ -17,7 +19,11 @@ c = wmi.WMI()
 
 #Creating config object
 config = ConfigParser()
-config.read(dirname(__file__)+'\config_data.ini')
+path = Path(dirname(sys.argv[0]))
+config.read(str(path.parent.absolute())+'\config_data.ini')
+
+# print(dirname(__file__)+'\config_data.ini')
+# sleep(10)
 
 #doesn't work, will try something else in future
 '''
@@ -73,8 +79,18 @@ if __name__ == '__main__':
     try:
         directory_helper()
     except:
-        pass
-    extracting_src_dst()
+        print("directory error")
+        sleep(10)
 
-    for index,letter,dst in zip(range(len(Drive_letter)), Drive_letter, config['Storage Location']):
-        copy_(letter,config['Storage Location'][dst]+main_dir[index]+'\\'+dir_name.replace(':','.'))
+    try:
+        extracting_src_dst()
+    except:
+        print("extraction error")
+        sleep(10)
+
+    try:
+        for index,letter,dst in zip(range(len(Drive_letter)), Drive_letter, config['Storage Location']):
+            copy_(letter,config['Storage Location'][dst]+main_dir[index]+'\\'+dir_name.replace(':','.'))
+    except:
+        print('copy error')
+        sleep(10)

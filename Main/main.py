@@ -12,8 +12,10 @@ from reset import reset_config
 
 # make configparser object
 config = ConfigParser()
-config.read(dirname(__file__)+"\config_data.ini")
-
+try:
+    config.read(dirname(__file__)+"\config_data.ini")
+except NameError:
+    config.read(dirname(sys.argv[0])+"\config_data.ini")
 #helper to get write acces via window's UAC,not using 
 #inno setup for now, so diabled
 '''
@@ -38,7 +40,7 @@ if config['Config'].getboolean('first run'):
 '''        
 
 #Create open file object
-with open(dirname(__file__)+'\config_data.ini', 'r+') as configfile:
+with open(dirname(sys.argv[0])+'\config_data.ini', 'r+') as configfile:
     #'True' program running pointer
     config['Config']['is main running'] = 'True'
     config.write(configfile) #Write to file 
@@ -56,9 +58,7 @@ for sig in (SIGABRT, SIGFPE, SIGILL, SIGINT, SIGSEGV, SIGTERM, SIGBREAK):
 '''
 
 
-copy_file_name = "\Copy.exe"
-
-
+copy_file_name = "\copy\ccc.exe"
 
 print("Let's See, what do we have here.......  (?_?)")
 sleep(1)
@@ -71,7 +71,7 @@ if not config["Config"].getboolean("backup configured"):
     #reset everything before begining
     #to prevent weird issues, from any premature termination 
     
-    with open(dirname(__file__)+'\config_data.ini', 'w') as reset:
+    with open(dirname(sys.argv[0])+'\config_data.ini', 'w') as reset:
         reset_config(config)
         config.write(reset)
 
@@ -110,10 +110,9 @@ if not config["Config"].getboolean("backup configured"):
     config['duration']['duration'] = str(_time)
         
     # Schedule Backup task
-    dir_path = dirname(__file__)+copy_file_name
-    
+    dir_path = dirname(sys.argv[0])+copy_file_name
     run(
-        "PowerShell -Command schtasks /create /tn USB_backup /sc minute /mo "+config['duration']['duration']+" /tr "+dir_path
+        "schtasks /create /tn USB_backup /sc minute /mo "+config['duration']['duration']+" /tr "+'"'+dir_path+'"'
     )
 
     config["Config"] = {"backup configured": 'True', 
@@ -121,7 +120,7 @@ if not config["Config"].getboolean("backup configured"):
                         "first run": 'False',
                         "is main running": 'False'}
 
-    with open(dirname(__file__)+'\config_data.ini', 'r+') as configfile:
+    with open(dirname(sys.argv[0])+'\config_data.ini', 'r+') as configfile:
         config.write(configfile) 
     print("Exiting program in 3 seconds")
     sleep(3)
@@ -138,9 +137,9 @@ if config["Config"].getboolean("task?"):
         user_input = input("Enter '1' to unconfigure task.\nEnter '2' to Reset everything: ")
         if user_input == '1':
             run(
-                "PowerShell -Command schtasks /delete /tn USB_backup"
+                "schtasks /delete /tn USB_backup"
             )
-            with open(dirname(__file__)+'\config_data.ini', 'r+') as configfile:
+            with open(dirname(sys.argv[0])+'\config_data.ini', 'r+') as configfile:
                 config['Config']['task?'] = 'False'
                 config["Config"]['is main running'] = 'False'
                 config.write(configfile)
@@ -150,9 +149,9 @@ if config["Config"].getboolean("task?"):
         if user_input == '2':
             print("First, let's try to remove auto backup")
             run(
-                "PowerShell -Command schtasks /delete /tn USB_backup"
+                "schtasks /delete /tn USB_backup"
             )
-            with open(dirname(__file__)+'\config_data.ini', 'r+') as configfile:
+            with open(dirname(sys.argv[0])+'\config_data.ini', 'r+') as configfile:
                 config['Config']['backup configured'] = 'False'
                 config["Config"]['is main running'] = 'False'
                 config.write(configfile)
@@ -171,11 +170,11 @@ else:
         user_input = input("Enter '1' to configure task.\nEnter '2' to Reset everything: ")
         if user_input == '1':
             # Schedule Backup task
-            dir_path = dirname(__file__)+copy_file_name
+            dir_path = dirname(sys.argv[0])+copy_file_name
             run(
-                "PowerShell -Command schtasks /create /tn USB_backup /sc minute /mo "+config['duration']['duration']+" /tr "+dir_path
+                "schtasks /create /tn USB_backup /sc minute /mo "+config['duration']['duration']+" /tr "+'"'+dir_path+'"'
             )
-            with open(dirname(__file__)+'\config_data.ini', 'r+') as configfile:
+            with open(dirname(sys.argv[0])+'\config_data.ini', 'r+') as configfile:
                 config['Config']['task?'] = 'True'
                 config["Config"]['is main running'] = 'False'
                 config.write(configfile)
@@ -183,7 +182,7 @@ else:
             break
 
         if user_input == '2':
-            with open(dirname(__file__)+'\config_data.ini', 'r+') as configfile:
+            with open(dirname(sys.argv[0])+'\config_data.ini', 'r+') as configfile:
                 config['Config']['backup configured'] = 'False'
                 config["Config"]['is main running'] = 'False'
                 config.write(configfile)
