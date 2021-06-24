@@ -1,6 +1,8 @@
 # LifeSaver-USB-LogicalDisks_auto_backup
 
 Note: Windows Only for now
+Note2: It works, BUT..
+       Schedule task(schtasks) has shown to be unreliable in my testing. And is frustating to debug. 
 
 LifeSaver automatically, periodically saves USB flash drive data into the PC. Theoriticaly it will work with any any connected drive ex - Hard Disk ,SSD ... But, can't handle Backing up multipatition drives. I can guess, but cannot be sure of, how it will react to multipartiton system.
 
