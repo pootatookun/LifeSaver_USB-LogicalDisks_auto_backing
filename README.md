@@ -6,7 +6,7 @@ Note2: It works, BUT..
 
 LifeSaver automatically, periodically saves USB flash drive data into the PC. Theoriticaly it will work with any any connected drive ex - Hard Disk ,SSD ... But, can't handle Backing up multipatition drives. I can guess, but cannot be sure of, how it will react to multipartiton system.
 
-I basically made it for my father. Being a boomer and him doing all his work in a flash drive. Many instances arose where his data got corrupt or some other mishap.
+I basically made it for my father. Being from old times and him doing all his work in a flash drive. Many instances arose where his data got corrupt or some other mishap.
 
 This is in alpha release. It's not thoroughly tested, but worked fine in all my testings.
 A release is attached to github, you can download it from there.
